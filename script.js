@@ -24,6 +24,12 @@ function searchHandler(e) {
 	search(e.target.value)
 }
 
+function highlight(dropDownItem,searchVal){
+	const regEx = new RegExp(`${searchVal}`,'gi');
+	const highlightedItem = dropDownItem.replace(regEx, `<strong>${searchVal}</strong>`)
+	return highlightedItem;
+}
+
 function showSuggestions(results, inputVal) {
 	// TODO
 	// remove every li after each key up
@@ -34,7 +40,9 @@ function showSuggestions(results, inputVal) {
 	if (results.length > 0) {
 		for (let i = 0; i < results.length; i++) {
 			let li = document.createElement('li');
-			li.innerText= results[i];
+			// li.innerText= results[i];
+			// suggestions.append(highlight(results[i],inputVal))
+			li.innerHTML = highlight(results[i],inputVal);
 			suggestions.append(li);
 		}
 		suggestions.style.backgroundColor = '#ffffff';
@@ -59,9 +67,18 @@ function useSuggestion(e) {
 }
 
 function listHover(e){
-	// console.log(e.target);
+	const element = e.target;
+	element.style.fontWeight = 'bold';
+	element.style.fontSize = '110%';
+}
+
+function mouseOut(e){
+	const element = e.target;
+	element.style.fontSize = '100%';
+	element.style.fontWeight = 'normal';
 }
 
 input.addEventListener('keyup', searchHandler);
 suggestions.addEventListener('click', useSuggestion);
 suggestions.addEventListener('mouseover', listHover);
+suggestions.addEventListener('mouseout',mouseOut);

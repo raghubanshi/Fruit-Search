@@ -17,6 +17,7 @@ input {
  /* TODO */
  width: 250px;
  height: 40px;
+ padding: 18px;
 }
 
 .search-container {
